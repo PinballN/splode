@@ -4,6 +4,8 @@ Cortex Command–style demolition / warehouse mission (Godot 4).
 
 **Version:** see `project.godot` → `config/version` (and [CHANGELOG.md](CHANGELOG.md)).
 
+- **[CURSOR.md](CURSOR.md)** — handshake doc for Cursor / next session: codebase map, conventions, where to look.
+
 ## Docs
 
 - **[CHANGELOG.md](CHANGELOG.md)** — version history and release notes.
