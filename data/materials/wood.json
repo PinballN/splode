@@ -1,0 +1,16 @@
+{
+  "id": "wood",
+  "category": "wood",
+  "strength": 25.0,
+  "flammability": 0.65,
+  "visibility_transparency": 0.0,
+  "sound": {
+    "break": "wood_break",
+    "impact": "wood_impact",
+    "burn": "wood_burn"
+  },
+  "destruction": {
+    "model": "splinter"
+  }
+}
+

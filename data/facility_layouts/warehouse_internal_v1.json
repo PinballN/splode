@@ -1,0 +1,12 @@
+{
+  "id": "warehouse_internal_v1",
+  "material_ids": ["reinforced_concrete", "concrete", "wood", "metal", "glass"],
+  "templates": [
+    { "pos": [-4.5, 2.0, -1.5], "size": [0.6, 4.0, 6.0] },
+    { "pos": [4.5, 2.0, -1.5], "size": [0.6, 4.0, 6.0] },
+    { "pos": [0.0, 2.0, 3.8], "size": [6.0, 4.0, 0.6] },
+    { "pos": [0.0, 2.0, -6.0], "size": [6.0, 4.0, 0.6] },
+    { "pos": [-2.0, 2.0, 1.0], "size": [3.0, 4.0, 0.6] }
+  ]
+}
+

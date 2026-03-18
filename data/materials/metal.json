@@ -1,0 +1,16 @@
+{
+  "id": "metal",
+  "category": "metal",
+  "strength": 80.0,
+  "flammability": 0.03,
+  "visibility_transparency": 0.0,
+  "sound": {
+    "break": "metal_clang",
+    "impact": "metal_impact",
+    "burn": ""
+  },
+  "destruction": {
+    "model": "deform"
+  }
+}
+

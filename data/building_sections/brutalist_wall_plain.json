@@ -1,0 +1,14 @@
+{
+  "id": "brutalist_wall_plain",
+  "name": "Plain wall segment",
+  "theme": "brutalist",
+  "tags": ["exterior", "interior", "concrete", "plain"],
+  "size": [4.0, 4.0, 0.6],
+  "symmetry": "horizontal",
+  "connector_slots": ["left", "right"],
+  "openings": [],
+  "segments": [
+    { "role": "plain", "pos": [0.0, 2.0, 0.0], "size": [4.0, 4.0, 0.6], "material_id": "reinforced_concrete" }
+  ],
+  "props": []
+}

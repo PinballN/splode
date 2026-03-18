@@ -1,0 +1,9 @@
+{
+  "id": "vent_round",
+  "name": "Round vent",
+  "theme": "industrial",
+  "tags": ["vent", "wall", "metal", "sci_fi"],
+  "scene": "res://scenes/gribblies/vent_round.tscn",
+  "default_scale": [1.0, 1.0, 1.0],
+  "anchor": "wall_surface"
+}

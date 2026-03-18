@@ -1,0 +1,10 @@
+{
+  "id": "test_he_sticky_breach",
+  "scene_path": "res://scenes/props/he_sticky_wall_breach_bomb.tscn",
+  "fuse_time": 7.5,
+  "blast_radius": 10.0,
+  "concussion_value": 1.4,
+  "fire_damage": 0.6,
+  "fire_radius": 3.0
+}
+

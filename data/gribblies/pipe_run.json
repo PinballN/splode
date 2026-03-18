@@ -1,0 +1,9 @@
+{
+  "id": "pipe_run",
+  "name": "Pipe run (horizontal)",
+  "theme": "industrial",
+  "tags": ["pipe", "wall", "metal", "conduit"],
+  "scene": "res://scenes/gribblies/pipe_run.tscn",
+  "default_scale": [1.0, 1.0, 1.0],
+  "anchor": "wall_surface"
+}

@@ -1,0 +1,10 @@
+{
+  "id": "test_incendiary",
+  "scene_path": "res://scenes/props/incendiary_bomb.tscn",
+  "fuse_time": 10.0,
+  "blast_radius": 5.0,
+  "concussion_value": 0.15,
+  "fire_damage": 3.0,
+  "fire_radius": 6.0
+}
+

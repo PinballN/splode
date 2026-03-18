@@ -1,0 +1,16 @@
+{
+  "id": "reinforced_concrete",
+  "category": "reinforced_concrete",
+  "strength": 90.0,
+  "flammability": 0.01,
+  "visibility_transparency": 0.0,
+  "sound": {
+    "break": "rc_break",
+    "impact": "rc_impact",
+    "burn": ""
+  },
+  "destruction": {
+    "model": "reinforced"
+  }
+}
+

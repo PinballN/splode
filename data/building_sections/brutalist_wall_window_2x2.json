@@ -1,0 +1,25 @@
+{
+  "id": "brutalist_wall_window_2x2",
+  "name": "Wall with 2×2 window",
+  "theme": "brutalist",
+  "tags": ["exterior", "interior", "window", "concrete", "framed"],
+  "size": [2.0, 4.0, 0.6],
+  "symmetry": "horizontal",
+  "connector_slots": ["left", "right"],
+  "openings": [
+    {
+      "type": "window",
+      "center": [0.0, 2.0],
+      "size": [2.0, 2.0],
+      "depth": 0.06,
+      "scene": "res://scenes/props/glass_window.tscn"
+    }
+  ],
+  "segments": [
+    { "role": "sill", "pos": [0.0, 0.5, 0.0], "size": [2.0, 1.0, 0.6], "material_id": "reinforced_concrete" },
+    { "role": "lintel", "pos": [0.0, 3.5, 0.0], "size": [2.0, 1.0, 0.6], "material_id": "reinforced_concrete" }
+  ],
+  "props": [
+    { "scene": "res://scenes/props/glass_window.tscn", "pos": [0.0, 2.0, 0.0] }
+  ]
+}

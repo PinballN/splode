@@ -1,0 +1,44 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/hud.gd" id="1"]
+
+[node name="HUD" type="CanvasLayer"]
+script = ExtResource("1")
+layer = 1
+
+[node name="Panel" type="PanelContainer" parent="."]
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 420.0
+offset_bottom = 120.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
+layout_mode = 2
+
+[node name="ObjectiveLabel" type="Label" parent="Panel/VBoxContainer"]
+text = "OBJECTIVE"
+
+[node name="StatusLabel" type="Label" parent="Panel/VBoxContainer"]
+text = "STEALTH: NORMAL"
+
+[node name="HealthLabel" type="Label" parent="Panel/VBoxContainer"]
+text = "HP 100/100"
+
+[node name="EquippedLabel" type="Label" parent="Panel/VBoxContainer"]
+text = "Equipped: —"
+
+[node name="ControlsLabel" type="Label" parent="Panel/VBoxContainer"]
+text = "Move: WASD or Click | Plant Bomb: E"
+
+[node name="BombCountdownLabel" type="Label" parent="."]
+visible = false
+offset_left = 240.0
+offset_top = 8.0
+offset_right = 480.0
+offset_bottom = 72.0
+horizontal_alignment = 1
+vertical_alignment = 1
+text = "10"
+modulate = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 56
+

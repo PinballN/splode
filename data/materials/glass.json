@@ -1,0 +1,16 @@
+{
+  "id": "glass",
+  "category": "glass",
+  "strength": 10.0,
+  "flammability": 0.0,
+  "visibility_transparency": 0.65,
+  "sound": {
+    "break": "glass_shatter",
+    "impact": "glass_impact",
+    "burn": ""
+  },
+  "destruction": {
+    "model": "shatter"
+  }
+}
+

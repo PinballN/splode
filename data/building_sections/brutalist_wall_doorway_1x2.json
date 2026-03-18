@@ -1,0 +1,27 @@
+{
+  "id": "brutalist_wall_doorway_1x2",
+  "name": "Wall with 1.2×2 doorway",
+  "theme": "brutalist",
+  "tags": ["exterior", "interior", "door", "doorway", "concrete"],
+  "size": [3.0, 4.0, 0.6],
+  "symmetry": "vertical",
+  "connector_slots": ["left", "right"],
+  "openings": [
+    {
+      "type": "door",
+      "center": [0.0, 1.0],
+      "size": [1.2, 2.0],
+      "depth": 0.08,
+      "scene": "res://scenes/props/metal_door.tscn"
+    }
+  ],
+  "segments": [
+    { "role": "pillar_below_left", "pos": [-1.05, 0.5, 0.0], "size": [0.9, 1.0, 0.6], "material_id": "reinforced_concrete" },
+    { "role": "pillar_below_right", "pos": [1.05, 0.5, 0.0], "size": [0.9, 1.0, 0.6], "material_id": "reinforced_concrete" },
+    { "role": "lintel", "pos": [0.0, 2.5, 0.0], "size": [1.2, 1.0, 0.6], "material_id": "reinforced_concrete" },
+    { "role": "pillar_above", "pos": [0.0, 3.5, 0.0], "size": [3.0, 1.0, 0.6], "material_id": "reinforced_concrete" }
+  ],
+  "props": [
+    { "scene": "res://scenes/props/metal_door.tscn", "pos": [0.0, 1.0, 0.0] }
+  ]
+}

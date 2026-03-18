@@ -1,0 +1,14 @@
+{
+  "id": "industrial_wall_plain",
+  "name": "Industrial wall (plain structural)",
+  "theme": "industrial",
+  "tags": ["exterior", "interior", "plain", "structural", "metal"],
+  "size": [4.0, 4.0, 0.5],
+  "symmetry": "horizontal",
+  "connector_slots": ["left", "right"],
+  "openings": [],
+  "segments": [
+    { "role": "plain", "pos": [0.0, 2.0, 0.0], "size": [4.0, 4.0, 0.5], "material_id": "metal" }
+  ],
+  "props": []
+}

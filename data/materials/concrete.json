@@ -1,0 +1,16 @@
+{
+  "id": "concrete",
+  "category": "concrete",
+  "strength": 55.0,
+  "flammability": 0.02,
+  "visibility_transparency": 0.0,
+  "sound": {
+    "break": "concrete_break",
+    "impact": "concrete_impact",
+    "burn": ""
+  },
+  "destruction": {
+    "model": "crumble"
+  }
+}
+

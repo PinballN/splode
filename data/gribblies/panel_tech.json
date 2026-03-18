@@ -1,0 +1,9 @@
+{
+  "id": "panel_tech",
+  "name": "Tech panel",
+  "theme": "industrial",
+  "tags": ["panel", "wall", "metal", "sci_fi"],
+  "scene": "res://scenes/gribblies/panel_tech.tscn",
+  "default_scale": [1.0, 1.0, 1.0],
+  "anchor": "wall_surface"
+}
