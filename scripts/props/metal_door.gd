@@ -26,7 +26,8 @@ func _ready() -> void:
 	add_to_group("breakables")
 	if door_mesh:
 		var mat := StandardMaterial3D.new()
-		mat.albedo_color = Color(0.52, 0.52, 0.55)
+		# Lighter grey metal so the flying door reads clearly.
+		mat.albedo_color = Color(0.66, 0.66, 0.70)
 		mat.metallic = 0.7
 		mat.roughness = 0.5
 		door_mesh.material_override = mat
@@ -87,7 +88,8 @@ func _blow_off(blast_origin: Vector3) -> void:
 	box.size = size
 	mesh_inst.mesh = box
 	var mat: StandardMaterial3D = StandardMaterial3D.new()
-	mat.albedo_color = Color(0.52, 0.52, 0.55)
+	# Lighter grey metal to match the in-scene door material.
+	mat.albedo_color = Color(0.66, 0.66, 0.70)
 	mat.metallic = 0.7
 	mat.roughness = 0.5
 	mesh_inst.material_override = mat

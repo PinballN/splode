@@ -30,6 +30,10 @@ var equipped_bomb_id: StringName = &""
 
 @export var pickup_interact_distance_m: float = 2.2
 
+# How strongly the player pushes wall-debris rigidbodies when bumping into them.
+# Only applies to chunks spawned by WallSurfaceDamage (meta: "wall_chunk").
+@export var wall_debris_push_impulse: float = 6.0
+
 var _click_target: Vector3
 var _has_click_target := false
 var _health: float
@@ -267,6 +271,26 @@ func _physics_process(_delta: float) -> void:
 			velocity.y = 0.0
 
 	move_and_slide()
+
+	# Push wall-debris out of the way when bumping into it.
+	# PlayerController is a kinematic CharacterBody3D, so by default it won't
+	# impart momentum to rigid bodies. We apply a small impulse ourselves
+	# to the rigid bodies created by WallSurfaceDamage chunks.
+	if wall_debris_push_impulse > 0.0:
+		var speed: float = velocity.length()
+		if speed > 0.01:
+			for i in range(get_slide_collision_count()):
+				var col = get_slide_collision(i)
+				var collider = col.get_collider()
+				if collider is RigidBody3D and (collider as Node).has_meta("wall_chunk"):
+					var rb: RigidBody3D = collider as RigidBody3D
+					var n: Vector3 = col.get_normal()
+					if n != Vector3.ZERO:
+						var push_dir: Vector3 = -n
+						# Use speed so faster movement pushes more.
+						var impulse: Vector3 = push_dir * wall_debris_push_impulse * clampf(speed, 0.0, move_speed)
+						var local_hit_pos: Vector3 = rb.to_local(col.get_position())
+						rb.apply_impulse(impulse, local_hit_pos)
 
 	if direction != Vector3.ZERO:
 		look_at(global_position + direction, Vector3.UP)

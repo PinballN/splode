@@ -124,6 +124,16 @@ func _destroy_wall(impact_origin: Vector3) -> void:
 	# Disable collision and hide mesh
 	body.collision_layer = 0
 	body.collision_mask = 0
+	# Also disable any explicit collision shapes so physics queries stop immediately.
+	# (Layer/mask changes can be delayed depending on the physics backend / frame.)
+	for c in body.get_children():
+		if c is CollisionShape3D:
+			(c as CollisionShape3D).disabled = true
+	# In case collision shapes are nested deeper than one level.
+	for c in body.get_children():
+		for n in c.get_children():
+			if n is CollisionShape3D:
+				(n as CollisionShape3D).disabled = true
 	if _mesh_inst:
 		_mesh_inst.visible = false
 
@@ -292,8 +302,25 @@ func _spawn_chunk(
 	chunk.add_child(mesh_inst)
 
 	# Position on wall face (local -0.5..0.5 then transform)
-	var local_x: float = randf_range(-0.5, 0.5) * wall_size.x
-	var local_y: float = randf_range(-0.5, 0.5) * wall_size.y
+	var local_x: float
+	var local_y: float
+
+	if persistent:
+		# Concentrate persistent rubble near the impact location so collision
+		# only blocks the local debris pile (not a wide area on the wall).
+		var impact_off: Vector3 = impact_origin - wall_center
+		var target_x: float = clampf(impact_off.dot(wall_right), -wall_size.x * 0.5, wall_size.x * 0.5)
+		var target_y: float = clampf(impact_off.dot(wall_up), -wall_size.y * 0.5, wall_size.y * 0.5)
+
+		# Smaller than the full wall size, but still large enough to look like
+		# a chunky pile rather than a single stack point.
+		var half_range_x: float = wall_size.x * 0.14
+		var half_range_y: float = wall_size.y * 0.16
+		local_x = randf_range(target_x - half_range_x, target_x + half_range_x)
+		local_y = randf_range(target_y - half_range_y, target_y + half_range_y)
+	else:
+		local_x = randf_range(-0.5, 0.5) * wall_size.x
+		local_y = randf_range(-0.5, 0.5) * wall_size.y
 	var pos: Vector3 = wall_center + wall_right * local_x + wall_up * local_y + wall_normal * 0.1
 
 	get_tree().current_scene.add_child(chunk)
@@ -334,9 +361,12 @@ func _queue_free_if_valid(node: Node) -> void:
 func _freeze_chunk_if_valid(node: Node) -> void:
 	if is_instance_valid(node) and node is RigidBody3D:
 		var rb: RigidBody3D = node as RigidBody3D
-		rb.freeze = true
-		rb.collision_layer = 0
-		rb.collision_mask = 0
+		# Don't use `freeze = true` here: frozen bodies can't be shoved by the player.
+		# Instead: settle them and let them go to sleep. They still block movement,
+		# but can be woken up and pushed by further impacts/collisions.
+		rb.linear_velocity = Vector3.ZERO
+		rb.angular_velocity = Vector3.ZERO
+		rb.sleeping = true
 
 
 func _spawn_dust(center: Vector3, normal: Vector3, _right: Vector3, _up: Vector3, wall_size: Vector3, params: Dictionary = {}) -> void:
@@ -390,7 +420,9 @@ func _spawn_rebar_skeleton(center: Vector3, normal: Vector3, _wall_right: Vector
 	rebar_root.basis = Basis(right2, up3, normal)
 
 	var rust_color: Color = Color(0.45, 0.28, 0.18)
-	var rod_count: int = randi_range(4, 8)
+	# Visual intent: a few rods "stick up", the remaining strands lie roughly horizontal near the base.
+	var upright_probability: float = 0.35
+	var rod_count: int = randi_range(6, 10)
 	var rod_radius: float = 0.04
 	var rod_height: float = minf(wall_size.y * 0.9, 2.5)
 	var spread_x: float = wall_size.x * 0.4
@@ -409,14 +441,39 @@ func _spawn_rebar_skeleton(center: Vector3, normal: Vector3, _wall_right: Vector
 		mat.metallic = 0.25
 		rod.material_override = mat
 		rebar_root.add_child(rod)
-		rod.position = Vector3(
-			randf_range(-spread_x, spread_x),
-			randf_range(-wall_size.y * 0.35, wall_size.y * 0.35),
-			randf_range(-spread_z, spread_z)
+
+		var is_upright: bool = randf() < upright_probability
+
+		var local_x: float = randf_range(-spread_x, spread_x)
+		var local_z: float = randf_range(-spread_z, spread_z)
+
+		# Position in rebar_root local space:
+		# - upright rods: distributed upward so they clearly stick out of broken concrete
+		# - horizontal strands: pushed toward the base so they look like loose rebar on the floor
+		var local_y: float = (
+			randf_range(-wall_size.y * 0.05, wall_size.y * 0.45) if is_upright
+			# Horizontal strands should be low enough that the player can walk over.
+			# Keep them roughly near the base of the destroyed chunk.
+			else randf_range(-wall_size.y * 0.52, -wall_size.y * 0.32)
 		)
-		# Slight tilt/bend: rotate around local X and Z so rods aren't perfectly vertical
-		rod.rotation.x = randf_range(-0.15, 0.15)
-		rod.rotation.z = randf_range(-0.15, 0.15)
+
+		rod.position = Vector3(local_x, local_y, local_z)
+
+		if is_upright:
+			# Slight tilt/bend: rotate around local X and Z so rods aren't perfectly vertical.
+			rod.rotation.x = randf_range(-0.15, 0.15)
+			rod.rotation.z = randf_range(-0.15, 0.15)
+			rod.rotation.y = randf_range(0.0, TAU)
+		else:
+			# Lay flat-ish: rotate so cylinder's Y-axis becomes horizontal (X or Z direction).
+			var rotate_about_z: bool = randf() < 0.5
+			if rotate_about_z:
+				rod.rotation.z = deg_to_rad(90.0) + randf_range(-0.2, 0.2)
+				rod.rotation.x = randf_range(-0.15, 0.15)
+			else:
+				rod.rotation.x = deg_to_rad(90.0) + randf_range(-0.2, 0.2)
+				rod.rotation.z = randf_range(-0.15, 0.15)
+			rod.rotation.y = randf_range(0.0, TAU)
 
 	var timer: SceneTreeTimer = get_tree().create_timer(12.0)
 	timer.timeout.connect(_queue_free_if_valid.bind(rebar_root))

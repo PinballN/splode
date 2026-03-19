@@ -2,6 +2,17 @@
 
 All notable changes to Splode are documented here. Version format: [SemVer](https://semver.org/).
 
+## [0.2.1] – 2026-03-18
+
+### Added
+- **Crate ignition sparks**: `CrateStack` now bursts visible sparks and spawns a few lingering floor embers that fade out over a random lifetime.
+- **Debris push**: player bumping into wall rubble now imparts impulse so chunks slide out of the way.
+
+### Changed
+- **Debris behavior**: persistent rubble collision stays enabled; rubble piles cluster near impact point; rebar “skeleton” mixes upright rods with horizontal strands.
+- **Visuals/lighting**: overhead warehouse lighting added and tuned; interior floor separated from outside ground with distinct materials and sizing.
+- **Metal door**: lighter grey material so the blown-off door reads better.
+
 ## [0.2.0] – 2025-03-17
 
 ### Added
